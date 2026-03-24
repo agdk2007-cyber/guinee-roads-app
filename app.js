@@ -34,20 +34,16 @@ function onEachFeature(feature, layer) {
     });
 }
 
-// Sample minimal route (demo)
-var demoRoute = {
-  "type": "Feature",
-  "properties": {"highway": "primary", "surface": "asphalt"},
-  "geometry": {
-    "type": "LineString",
-    "coordinates": [
-      [-13.5784, 9.6412],
-      [-12.8628, 10.0450]
-    ]
-  }
-};
+fetch('data/routes.geojson.json')
+  .then(res => res.json())
+  .then(data => {
 
-L.geoJSON(demoRoute, {
-    style: style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+    L.geoJSON(data, {
+        style: style,
+        onEachFeature: onEachFeature
+    }).addTo(map);
+
+  })
+  .catch(err => {
+    console.error("Erreur chargement :", err);
+  });
